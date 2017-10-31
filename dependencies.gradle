@@ -1,0 +1,5 @@
+ext {
+    servletApiVersion='4.0.0'
+    jUnitApiVersion = '5.0.0'
+    jUnitEngineVersion = '5.0.0'
+}

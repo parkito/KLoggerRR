@@ -1,7 +1,8 @@
 package com.parkito;
 
-import com.tsystems.concar.commons.app.wrappers.RequestWrapper;
-import com.tsystems.concar.commons.app.wrappers.ResponseWrapper;
+
+import com.parkito.wrappers.RequestWrapper;
+import com.parkito.wrappers.ResponseWrapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.web.filter.OncePerRequestFilter;
@@ -21,6 +22,7 @@ import java.util.concurrent.atomic.AtomicInteger;
  */
 public class LoggingRequestFilterSpring extends OncePerRequestFilter {
     private static final Logger logger = LoggerFactory.getLogger(LoggingRequestFilter.class);
+    public static final String EMPTY_RESPONSE_BODY = "[NONE]";
 
     private static AtomicInteger atomicInteger = new AtomicInteger();
     private final String CHARACTER_ENCODING = "UTF-8";
@@ -90,7 +92,7 @@ public class LoggingRequestFilterSpring extends OncePerRequestFilter {
                     .append("\n");
         }
 
-        String responseBody = "[NONE]";
+        String responseBody = EMPTY_RESPONSE_BODY;
 
         try {
             responseBody = new String(response.toByteArray(), response.getCharacterEncoding());
