@@ -26,5 +26,4 @@ public class RequestWrapper extends HttpServletRequestWrapper {
     public byte[] toByteArray() {
         return bos.toByteArray();
     }
-
 }

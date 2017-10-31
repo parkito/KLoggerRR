@@ -1,5 +1,4 @@
-package com.parkito;
-
+package com.parkito.configuraton;
 
 import com.parkito.wrappers.RequestWrapper;
 import com.parkito.wrappers.ResponseWrapper;
@@ -17,11 +16,12 @@ import java.util.Collections;
 import java.util.concurrent.atomic.AtomicInteger;
 
 /**
- * @author Artem Karnov @date 10/29/2017.
+ * @author Artem Karnov @date 10/31/2017.
  * artem.karnov@t-systems.com
  */
-public class LoggingRequestFilterSpring extends OncePerRequestFilter {
-    private static final Logger logger = LoggerFactory.getLogger(LoggingRequestFilter.class);
+public class SpringConfiguration extends OncePerRequestFilter {
+    private static final Logger logger = LoggerFactory.getLogger(SpringConfiguration.class);
+
     public static final String EMPTY_RESPONSE_BODY = "[NONE]";
 
     private static AtomicInteger atomicInteger = new AtomicInteger();

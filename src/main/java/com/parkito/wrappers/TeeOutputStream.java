@@ -1,6 +1,8 @@
 package com.parkito.wrappers;
 
 
+import com.parkito.proxy.ProxyOutputStream;
+
 import java.io.IOException;
 import java.io.OutputStream;
 
@@ -18,7 +20,7 @@ public class TeeOutputStream extends ProxyOutputStream {
     /**
      * the second OutputStream to write to
      */
-    protected OutputStream branch; //TODO consider making this private
+    private OutputStream branch;
 
     /**
      * Constructs a TeeOutputStream.
@@ -98,6 +100,5 @@ public class TeeOutputStream extends ProxyOutputStream {
             this.branch.close();
         }
     }
-
 }
 

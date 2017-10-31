@@ -1,5 +1,5 @@
 
-package com.parkito.wrappers;
+package com.parkito.proxy;
 
 import java.io.FilterOutputStream;
 import java.io.IOException;
@@ -16,7 +16,6 @@ import java.io.OutputStream;
  * <p>
  * See the protected methods for ways in which a subclass can easily decorate
  * a stream with custom pre-, post- or error processing functionality.
- * @version $Id: ProxyOutputStream.java 1415850 2012-11-30 20:51:39Z ggregory $
  */
 public class ProxyOutputStream extends FilterOutputStream {
 
@@ -26,8 +25,8 @@ public class ProxyOutputStream extends FilterOutputStream {
      * @param proxy the OutputStream to delegate to
      */
     public ProxyOutputStream(final OutputStream proxy) {
-        super(proxy);
         // the proxy is stored in a protected superclass variable named 'out'
+        super(proxy);
     }
 
     /**
@@ -123,7 +122,6 @@ public class ProxyOutputStream extends FilterOutputStream {
      *
      * @param n number of bytes to be written
      * @throws IOException if the pre-processing fails
-     * @since 2.0
      */
     protected void beforeWrite(final int n) throws IOException {
     }
@@ -140,7 +138,6 @@ public class ProxyOutputStream extends FilterOutputStream {
      *
      * @param n number of bytes written
      * @throws IOException if the post-processing fails
-     * @since 2.0
      */
     protected void afterWrite(final int n) throws IOException {
     }
@@ -153,7 +150,6 @@ public class ProxyOutputStream extends FilterOutputStream {
      *
      * @param e The IOException thrown
      * @throws IOException if an I/O error occurs
-     * @since 2.0
      */
     protected void handleIOException(final IOException e) throws IOException {
         throw e;

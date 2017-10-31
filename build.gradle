@@ -13,6 +13,11 @@ repositories {
 
 dependencies {
     compile "javax.servlet:javax.servlet-api:$servletApiVersion"
+    compile "org.slf4j:slf4j-api:$self4jVersion"
+    compile "org.springframework:spring-web:$springWebModuleVersion"
+    compile "org.springframework:spring-core:$springWebModuleVersion"
+    compile "org.springframework:spring-beans:$springWebModuleVersion"
+    compile "org.springframework:spring-context:$springWebModuleVersion"
     //test
     testCompile "org.junit.jupiter:junit-jupiter-api:$jUnitApiVersion"
     testCompile "org.junit.jupiter:junit-jupiter-engine:$jUnitEngineVersion"

@@ -1,5 +1,5 @@
 
-package com.parkito.wrappers;
+package com.parkito.proxy;
 
 
 import java.io.FilterInputStream;
@@ -17,12 +17,10 @@ import java.io.InputStream;
  * <p>
  * See the protected methods for ways in which a subclass can easily decorate
  * a stream with custom pre-, post- or error processing functionality.
- *
- * @version $Id: ProxyInputStream.java 1603493 2014-06-18 15:46:07Z ggregory $
  */
 
 public abstract class ProxyInputStream extends FilterInputStream {
-    public static final int EOF = -1;
+    private static final int EOF = -1;
 
     /**
      * Constructs a new ProxyInputStream.
@@ -192,9 +190,8 @@ public abstract class ProxyInputStream extends FilterInputStream {
      *
      * @param n number of bytes that the caller asked to be read
      * @throws IOException if the pre-processing fails
-     * @since 2.0
      */
-    protected void beforeRead(final int n) throws IOException {
+    private void beforeRead(final int n) throws IOException {
         // no-op
     }
 
@@ -213,7 +210,6 @@ public abstract class ProxyInputStream extends FilterInputStream {
      *
      * @param n number of bytes read, or -1 if the end of stream was reached
      * @throws IOException if the post-processing fails
-     * @since 2.0
      */
     protected void afterRead(final int n) throws IOException {
         // no-op
@@ -227,7 +223,6 @@ public abstract class ProxyInputStream extends FilterInputStream {
      *
      * @param e The IOException thrown
      * @throws IOException if an I/O error occurs
-     * @since 2.0
      */
     protected void handleIOException(final IOException e) throws IOException {
         throw e;
