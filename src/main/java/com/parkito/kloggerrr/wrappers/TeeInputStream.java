@@ -1,6 +1,7 @@
-package com.parkito.wrappers;
+package com.parkito.kloggerrr.wrappers;
 
-import com.parkito.proxy.ProxyInputStream;
+import com.parkito.kloggerrr.proxy.ProxyInputStream;
+import com.parkito.kloggerrr.utility.LoggingUtility;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -19,9 +20,6 @@ import java.io.OutputStream;
  * The proxied input stream is closed when the {@link #close()} method is
  * called on this proxy. It is configurable whether the associated output
  * stream will also closed.
- *
- * @version $Id: TeeInputStream.java 1586350 2014-04-10 15:57:20Z ggregory $
- * @since 1.4
  */
 public class TeeInputStream extends ProxyInputStream {
 
@@ -95,7 +93,7 @@ public class TeeInputStream extends ProxyInputStream {
     @Override
     public int read() throws IOException {
         final int ch = super.read();
-        if (ch != EOF) {
+        if (ch != LoggingUtility.EOF) {
             branch.write(ch);
         }
         return ch;
@@ -131,7 +129,7 @@ public class TeeInputStream extends ProxyInputStream {
     @Override
     public int read(final byte[] bts) throws IOException {
         final int n = super.read(bts);
-        if (n != EOF) {
+        if (n != LoggingUtility.EOF) {
             branch.write(bts, 0, n);
         }
         return n;

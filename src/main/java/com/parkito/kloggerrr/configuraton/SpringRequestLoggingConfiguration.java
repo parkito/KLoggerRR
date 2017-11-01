@@ -1,7 +1,6 @@
-package com.parkito.configuraton;
+package com.parkito.kloggerrr.configuraton;
 
-import com.parkito.implementation.FilterImplementation;
-import org.springframework.beans.factory.annotation.Autowired;
+import com.parkito.kloggerrr.implementation.RequestLogger;
 import org.springframework.web.filter.OncePerRequestFilter;
 
 import javax.servlet.FilterChain;
@@ -14,13 +13,11 @@ import java.io.IOException;
  * @author Artem Karnov @date 10/31/2017.
  * artem.karnov@t-systems.com
  */
-public class SpringConfiguration extends OncePerRequestFilter {
-    @Autowired
-    private FilterImplementation filterImplementation;
+public class SpringRequestLoggingConfiguration extends OncePerRequestFilter {
+    private RequestLogger requestLogger = new RequestLogger();
 
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, final FilterChain filterChain) throws ServletException, IOException {
-        filterImplementation.doFilter(request, response, filterChain);
+        requestLogger.doLogging(request, response, filterChain);
     }
-
 }

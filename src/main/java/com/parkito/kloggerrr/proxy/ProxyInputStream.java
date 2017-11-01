@@ -1,6 +1,8 @@
 
-package com.parkito.proxy;
+package com.parkito.kloggerrr.proxy;
 
+
+import com.parkito.kloggerrr.utility.LoggingUtility;
 
 import java.io.FilterInputStream;
 import java.io.IOException;
@@ -20,8 +22,6 @@ import java.io.InputStream;
  */
 
 public abstract class ProxyInputStream extends FilterInputStream {
-    private static final int EOF = -1;
-
     /**
      * Constructs a new ProxyInputStream.
      *
@@ -43,11 +43,11 @@ public abstract class ProxyInputStream extends FilterInputStream {
         try {
             beforeRead(1);
             final int b = in.read();
-            afterRead(b != EOF ? 1 : EOF);
+            afterRead(b != LoggingUtility.EOF ? 1 : LoggingUtility.EOF);
             return b;
         } catch (final IOException e) {
             handleIOException(e);
-            return EOF;
+            return LoggingUtility.EOF;
         }
     }
 
@@ -67,7 +67,7 @@ public abstract class ProxyInputStream extends FilterInputStream {
             return n;
         } catch (final IOException e) {
             handleIOException(e);
-            return EOF;
+            return LoggingUtility.EOF;
         }
     }
 
@@ -89,7 +89,7 @@ public abstract class ProxyInputStream extends FilterInputStream {
             return n;
         } catch (final IOException e) {
             handleIOException(e);
-            return EOF;
+            return LoggingUtility.EOF;
         }
     }
 

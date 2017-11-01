@@ -1,7 +1,7 @@
-package com.parkito.wrappers;
+package com.parkito.kloggerrr.wrappers;
 
 
-import com.parkito.proxy.ProxyOutputStream;
+import com.parkito.kloggerrr.proxy.ProxyOutputStream;
 
 import java.io.IOException;
 import java.io.OutputStream;

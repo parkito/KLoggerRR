@@ -1,8 +1,7 @@
-package com.parkito.implementation;
+package com.parkito.kloggerrr.implementation;
 
-import com.parkito.configuraton.SpringConfiguration;
-import com.parkito.wrappers.RequestWrapper;
-import com.parkito.wrappers.ResponseWrapper;
+import com.parkito.kloggerrr.wrappers.RequestWrapper;
+import com.parkito.kloggerrr.wrappers.ResponseWrapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -13,22 +12,21 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.util.Collections;
-import java.util.concurrent.atomic.AtomicInteger;
+import java.util.concurrent.atomic.AtomicLong;
 
 /**
  * @author Artem Karnov @date 10/31/2017.
  * artem.karnov@t-systems.com
  */
-public class FilterImplementation {
-    private static final Logger logger = LoggerFactory.getLogger(SpringConfiguration.class);
+public class RequestLogger {
+    private static final Logger LOGGER = LoggerFactory.getLogger(RequestLogger.class);
 
-    public static final String EMPTY_RESPONSE_BODY = "[NONE]";
+    private static final String EMPTY_RESPONSE_BODY = "[NONE]";
+    private static final String DEFAULT_CHARACTER_ENCODING = "UTF-8";
+    private static AtomicLong atomicLong = new AtomicLong();
 
-    private static AtomicInteger atomicInteger = new AtomicInteger();
-    private final String CHARACTER_ENCODING = "UTF-8";
-
-    public void doFilter(HttpServletRequest request, HttpServletResponse response, final FilterChain filterChain) throws ServletException, IOException {
-        int requestId = atomicInteger.incrementAndGet();
+    public void doLogging(HttpServletRequest request, HttpServletResponse response, final FilterChain filterChain) throws ServletException, IOException {
+        long requestId = atomicLong.incrementAndGet();
         request = new RequestWrapper(request);
         response = new ResponseWrapper(response);
         try {
@@ -39,7 +37,7 @@ public class FilterImplementation {
         }
     }
 
-    private void logRequest(HttpServletRequest httpServletRequest, int requestId) {
+    private void logRequest(HttpServletRequest httpServletRequest, long requestId) {
         RequestWrapper request = (RequestWrapper) httpServletRequest;
         StringBuilder requestHeaders = new StringBuilder();
         for (String header : Collections.list(request.getHeaderNames())) {
@@ -56,17 +54,16 @@ public class FilterImplementation {
             fullUrl.append("?");
             fullUrl.append(request.getQueryString());
         }
-
-        String requestBody = "[NONE]";
+        String charEncoding = request.getCharacterEncoding() != null ? request.getCharacterEncoding() : DEFAULT_CHARACTER_ENCODING;
+        String requestBody = EMPTY_RESPONSE_BODY;
 
         try {
-            String charEncoding = request.getCharacterEncoding() != null ? request.getCharacterEncoding() : "UTF-8";
             requestBody = (new String(request.toByteArray(), charEncoding));
         } catch (UnsupportedEncodingException e) {
-            logger.warn("Failed to parse request body", e);
+            LOGGER.warn("Failed to parse request body", e);
         }
 
-        logger.info("Request Message \n" +
+        LOGGER.info("Request Message \n" +
                         "---------------------------- \n" +
                         "RequestID:    {} \n" +
                         "Address:   {} \n" +
@@ -76,11 +73,11 @@ public class FilterImplementation {
                         "Headers:    \n{}" +
                         "Request body:  \n {} \n" +
                         "----------------------------- \n",
-                requestId, fullUrl, CHARACTER_ENCODING, request.getContentType(),
+                requestId, fullUrl, charEncoding, request.getContentType(),
                 request.getMethod(), requestHeaders.toString(), requestBody);
     }
 
-    private void logResponse(HttpServletResponse httpServletResponse, int responseId) {
+    private void logResponse(HttpServletResponse httpServletResponse, long responseId) {
         ResponseWrapper response = (ResponseWrapper) httpServletResponse;
         StringBuilder responseHeaders = new StringBuilder();
         for (String header : response.getHeaderNames()) {
@@ -90,15 +87,15 @@ public class FilterImplementation {
                     .append(response.getHeader(header))
                     .append("\n");
         }
-
+        String charEncoding = response.getCharacterEncoding() != null ? response.getCharacterEncoding() : DEFAULT_CHARACTER_ENCODING;
         String responseBody = EMPTY_RESPONSE_BODY;
 
         try {
             responseBody = new String(response.toByteArray(), response.getCharacterEncoding());
         } catch (UnsupportedEncodingException e) {
-            logger.warn("Failed to parse response body", e);
+            LOGGER.warn("Failed to parse response body", e);
         }
-        logger.info("Response Message \n" +
+        LOGGER.info("Response Message \n" +
                         "---------------------------- \n" +
                         "ResponseID:    {} \n" +
                         "Response-Code:   {} \n" +
@@ -108,7 +105,7 @@ public class FilterImplementation {
                         "Headers:    \n{}" +
                         "Response body:  \n {} \n" +
                         "----------------------------- \n",
-                responseId, response.getStatus(), CHARACTER_ENCODING, response.getContentType(),
+                responseId, response.getStatus(), charEncoding, response.getContentType(),
                 response.getStatus(), responseHeaders.toString(), responseBody);
     }
 }

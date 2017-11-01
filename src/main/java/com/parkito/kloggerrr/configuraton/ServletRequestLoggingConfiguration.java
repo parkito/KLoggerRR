@@ -1,6 +1,6 @@
-package com.parkito.configuraton;
+package com.parkito.kloggerrr.configuraton;
 
-import com.parkito.implementation.FilterImplementation;
+import com.parkito.kloggerrr.implementation.RequestLogger;
 
 import javax.servlet.Filter;
 import javax.servlet.FilterChain;
@@ -15,11 +15,11 @@ import java.io.IOException;
  * @author Artem Karnov @date 10/31/2017.
  * artem.karnov@t-systems.com
  */
-public class ServletConfiguration implements Filter {
-    private FilterImplementation filterImplementation = new FilterImplementation();
+public class ServletRequestLoggingConfiguration implements Filter {
+    private RequestLogger requestLogger = new RequestLogger();
 
     @Override
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain filterChain) throws IOException, ServletException {
-        filterImplementation.doFilter((HttpServletRequest) request, (HttpServletResponse) response, filterChain);
+        requestLogger.doLogging((HttpServletRequest) request, (HttpServletResponse) response, filterChain);
     }
 }
