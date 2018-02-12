@@ -1,4 +1,4 @@
-package com.parkito.kloggerrr;
+package ru.siksmfp.kloggerrr;
 
 import org.junit.jupiter.api.Test;
 

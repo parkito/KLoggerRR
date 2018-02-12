@@ -1,0 +1,2 @@
+org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
+com.tsystems.concar.commons.logging.controller.config.LoggingConfig

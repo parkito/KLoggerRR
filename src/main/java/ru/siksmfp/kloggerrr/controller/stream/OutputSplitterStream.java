@@ -1,35 +1,30 @@
-package com.parkito.kloggerrr.wrappers;
-
-
-import com.parkito.kloggerrr.proxy.ProxyOutputStream;
+package ru.siksmfp.kloggerrr.controller.stream;
 
 import java.io.IOException;
 import java.io.OutputStream;
 
 /**
- * @author Artem Karnov @date 10/30/2017.
- * artem.karnov@t-systems.com
+ * @author Artem Karnov @date 1/22/2018.
+ * @email artem.karnov@t-systems.com
  * <p>
- * Classic splitter of OutputStream. Named after the unix 'tee'
- * command. It allows a stream to be branched off so there
- * are now two streams.
- * @version $Id: TeeOutputStream.java 1686503 2015-06-19 21:32:13Z sebb $
+ * Classic splitter of OutputStream.
+ * The main reason of this class is we get data from output stream
+ * and write it to two streams simultaneously (<code>branch</code> and <code>original</code>).
+ * After that one stream (<code>branch</code>) we read for caching second
+ * (<code>original</code>) we throw farther to response executor.
  */
-public class TeeOutputStream extends ProxyOutputStream {
-
-    /**
-     * the second OutputStream to write to
-     */
+public class OutputSplitterStream extends OutputStream {
     private OutputStream branch;
+    private OutputStream original;
 
     /**
-     * Constructs a TeeOutputStream.
+     * Constructs a OutputSplitterStream.
      *
-     * @param out    the main OutputStream
-     * @param branch the second OutputStream
+     * @param original stream to farther executing
+     * @param branch   stream for logging
      */
-    public TeeOutputStream(final OutputStream out, final OutputStream branch) {
-        super(out);
+    public OutputSplitterStream(final OutputStream original, final OutputStream branch) {
+        this.original = original;
         this.branch = branch;
     }
 
@@ -67,7 +62,7 @@ public class TeeOutputStream extends ProxyOutputStream {
      */
     @Override
     public synchronized void write(final int b) throws IOException {
-        super.write(b);
+        this.original.write(b);
         this.branch.write(b);
     }
 
