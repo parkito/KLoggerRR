@@ -6,7 +6,7 @@ import java.io.IOException;
  * @author Artem Karnov @date 2/14/2018.
  * @email artem.karnov@t-systems.com
  */
-public interface HttpLogWriter {
+public interface LogWriter {
 
     default boolean isActive(final RawHttpRequest request) throws IOException {
         return true;

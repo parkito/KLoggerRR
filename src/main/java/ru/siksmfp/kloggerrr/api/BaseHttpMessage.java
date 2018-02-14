@@ -1,5 +1,7 @@
 package ru.siksmfp.kloggerrr.api;
 
+import com.sun.management.VMOption;
+
 import java.nio.charset.Charset;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -17,7 +19,7 @@ public interface BaseHttpMessage {
 
     String getProtocolVersion();
 
-    Origin getOrigin();
+    VMOption.Origin getOrigin();
 
     Map<String, List<String>> getHeaders();
 

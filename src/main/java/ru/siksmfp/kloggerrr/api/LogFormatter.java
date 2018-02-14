@@ -6,7 +6,7 @@ import java.io.IOException;
  * @author Artem Karnov @date 2/14/2018.
  * @email artem.karnov@t-systems.com
  */
-public interface HttpLogFormatter {
+public interface LogFormatter {
 
     String format(final Precorrelation<HttpRequest> precorrelation) throws IOException;
 

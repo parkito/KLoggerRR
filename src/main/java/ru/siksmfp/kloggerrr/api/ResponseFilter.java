@@ -7,7 +7,7 @@ package ru.siksmfp.kloggerrr.api;
 @FunctionalInterface
 public interface ResponseFilter {
 
-    HttpResponse filter(final HttpResponse response);
+    RawHttpResponse filter(final RawHttpResponse response);
 
     static ResponseFilter none() {
         return response -> response;
@@ -17,4 +17,5 @@ public interface ResponseFilter {
         return response ->
                 left.filter(right.filter(response));
     }
+
 }

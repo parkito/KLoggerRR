@@ -1,5 +1,7 @@
 package ru.siksmfp.kloggerrr.api;
 
+import com.sun.management.VMOption;
+
 import java.nio.charset.Charset;
 import java.util.List;
 import java.util.Map;
@@ -17,7 +19,7 @@ public interface ForwardingBaseHttpMessage extends BaseHttpMessage {
     }
 
     @Override
-    default Origin getOrigin() {
+    default VMOption.Origin getOrigin() {
         return delegate().getOrigin();
     }
 
