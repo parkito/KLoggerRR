@@ -1,6 +1,5 @@
 package ru.siksmfp.kloggerrr.api;
 
-import org.springframework.context.annotation.Configuration;
 import org.springframework.web.client.RestTemplate;
 
 import java.util.ArrayList;
@@ -10,8 +9,9 @@ import java.util.List;
  * @author Artem Karnov @date 2/14/2018.
  * @email artem.karnov@t-systems.com
  */
-@Configuration
 public class KLogger {
+    public KLogger() {
+    }
 
     public static class KLoggerBuilder {
         private List<RequestFilter> requestFilters;
@@ -22,6 +22,7 @@ public class KLogger {
         private List<LogWriter> writers;
         private List<RequestReceiver> receiver;
         private LogFormatter formatter;
+        public boolean isWithoutServlets;
 
         public KLoggerBuilder() {
             requestFilters = new ArrayList<>();
@@ -73,12 +74,20 @@ public class KLogger {
             return this;
         }
 
+        public KLoggerBuilder withoutServletsLogging(boolean isWithoutServlets){
+            this.isWithoutServlets = isWithoutServlets;
+            return this;
+        }
+
+        public KLogger build() {
+            return null;
+        }
+
     }
 
-    private static KLoggerBuilder kLoggerBuilder = new KLoggerBuilder();
+    private KLoggerBuilder kLoggerBuilder = new KLoggerBuilder();
 
-
-    public static RestTemplate makeRestTemplate() {
+    public  RestTemplate makeRestTemplate() {
         return null;
     }
 

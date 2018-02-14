@@ -1,6 +1,6 @@
 package ru.siksmfp.kloggerrr.api;
 
-import java.io.IOException;
+import java.util.List;
 
 /**
  * @author Artem Karnov @date 2/14/2018.
@@ -8,12 +8,8 @@ import java.io.IOException;
  */
 public interface LogWriter {
 
-    default boolean isActive(final RawHttpRequest request) throws IOException {
-        return true;
-    }
+    void write(LogWriter logWriter);
 
-    void writeRequest(final Precorrelation<String> precorrelation) throws IOException;
-
-    void writeResponse(final Correlation<String, String> correlation) throws IOException;
+    void writeAll(List<LogWriter> logWriters);
 
 }
