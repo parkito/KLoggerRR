@@ -83,7 +83,7 @@ public class LoggingFilter extends OncePerRequestFilter {
                 responseBody);
     }
 
-    public static String formatRequestHeaders(HttpServletRequest request) {
+    private String formatRequestHeaders(HttpServletRequest request) {
         StringBuilder requestHeaders = new StringBuilder();
         for (String header : Collections.list(request.getHeaderNames())) {
             requestHeaders
@@ -95,7 +95,7 @@ public class LoggingFilter extends OncePerRequestFilter {
         return requestHeaders.toString();
     }
 
-    public static String formatResponseHeaders(HttpServletResponse response) {
+    private String formatResponseHeaders(HttpServletResponse response) {
         StringBuilder responseHeaders = new StringBuilder();
         for (String header : response.getHeaderNames()) {
             responseHeaders
@@ -107,7 +107,7 @@ public class LoggingFilter extends OncePerRequestFilter {
         return responseHeaders.toString();
     }
 
-    public static String formatAddress(HttpServletRequest request) {
+    private String formatAddress(HttpServletRequest request) {
         StringBuilder fullUrl = new StringBuilder();
         fullUrl.append(request.getRequestURL().toString());
         if (request.getQueryString() != null) {
